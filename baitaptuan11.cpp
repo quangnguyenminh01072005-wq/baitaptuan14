@@ -48,6 +48,45 @@ Node* cayLechPhai() {
     C->right = D;
     return A;
 }
+Node* cayZigZag() {
+    Node* A = taoNode('A');
+    Node* B = taoNode('B');
+    Node* C = taoNode('C');
+    Node* D = taoNode('D');
+    A->left = B;
+    B->right = C;
+    C->left = D;
+    return A;
+}
+Node* cayBieuThuc() {
+    Node* chia = taoNode('/');
+    Node* cong = taoNode('+');
+    Node* d = taoNode('d');
+
+    Node* nhan = taoNode('*');
+    Node* c = taoNode('c');
+
+    Node* a = taoNode('a');
+    Node* b = taoNode('b');
+
+    chia->left = cong;
+    chia->right = d;
+
+    cong->left = nhan;
+    cong->right = c;
+
+    nhan->left = a;
+    nhan->right = b;
+
+    return chia;
+}
+void duyetTruoc(Node* root) {
+    if(root != NULL) {
+        cout << root->data << " ";
+        duyetTruoc(root->left);
+        duyetTruoc(root->right);
+    }
+}
 
 int main()
 {
