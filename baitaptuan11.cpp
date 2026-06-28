@@ -87,6 +87,27 @@ void duyetTruoc(Node* root) {
         duyetTruoc(root->right);
     }
 }
+void duyetGiua(Node* root) {
+    if(root != NULL) {
+        duyetGiua(root->left);
+        cout << root->data << " ";
+        duyetGiua(root->right);
+    }
+}
+void duyetSau(Node* root) {
+    if(root != NULL) {
+        duyetSau(root->left);
+        duyetSau(root->right);
+        cout << root->data << " ";
+    }
+}
+void truoc(Node* root) {
+    if(root != NULL) {
+        cout << root->data;
+        truoc(root->left);
+        truoc(root->right);
+    }
+}
 
 int main()
 {
