@@ -14,6 +14,16 @@ struct Matran {   // khai báo
     int matrix[Sotinh_max][Sotinh_max];
 };
 
+void Khoitaomatran(Matran &g, int n) { // tạo mtr trống (0)
+    g.Sotinhxet = n;
+    for (int i = 0; i < n; i++) {     // mtr trống
+        for (int j = 0; j < n; j++)  g.matrix[i][j] = 0; }
+}
+
+void ThemDuongMaTran(Matran &g, int u, int v, int matuyen) {
+    g.matrix[u][v] = matuyen;  // cap nhat lai, khph ton tai ma la tuyen duong
+    g.matrix[v][u] = matuyen; }
+
 int main()
 {
     return 0;
