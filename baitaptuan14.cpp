@@ -104,7 +104,39 @@ void preorder(Node *root) {
     }
 }
 
-int main()
-{
+// Duyệt LNR
+void inorder(Node *root) {
+    if (root != NULL) {
+        inorder(root->left);
+        cout << root->key << " ";
+        inorder(root->right);
+    }
+}
+
+// Duyệt LRN.
+void postorder(Node *root) {
+    if (root != NULL) {
+        postorder(root->left);
+        postorder(root->right);
+        cout << root->key << " ";
+    }
+}
+
+int main() {
+    // B1: Dựng cây AVL
+    int a[] = {32, 51, 27, 83, 96, 11, 45, 75, 66};
+    int n = sizeof(a) / sizeof(a[0]);
+    Node *root = NULL;
+    for (int i = 0; i < n; i++) {
+        root = insert(root, a[i]);
+    }
+
+    // B3: Duyệt cây
+    cout << "NLR (Preorder): ";
+    preorder(root);
+    cout << "\nLNR (Inorder): ";
+    inorder(root);
+    cout << "\nLRN (Postorder): ";
+    postorder(root);
     return 0;
 }
