@@ -159,6 +159,113 @@ void inLoTrinh(int dinh, int vet[])
     cout << tenTinh[dinh];
 }
 
+void inKetQuaDijkstra(DoThi g, int dinhDau, int dinhCuoi)
+{
+    int khoangCach[SO_TINH];
+    int vet[SO_TINH];
+
+    chayDijkstra(g, dinhDau, khoangCach, vet);
+
+    cout << "\n\nDIJKSTRA - DUONG DI NGAN NHAT TU " << tenTinh[dinhDau] << "\n";
+    cout << setw(15) << "Dinh den" << setw(15) << "Khoang cach" << endl;
+
+    for(int i = 0; i < g.soDinh; i++)
+        cout << setw(15) << tenTinh[i] << setw(15) << khoangCach[i] << endl;
+
+    cout << "\nDuong di ngan nhat tu " << tenTinh[dinhDau] << " den " << tenTinh[dinhCuoi] << ": ";
+
+    if(khoangCach[dinhCuoi] == VO_CUC)
+        cout << "Khong co duong di";
+    else
+    {
+        inLoTrinh(dinhCuoi, vet);
+        cout << "\nTong trong so: " << khoangCach[dinhCuoi];
+    }
+
+    cout << endl;
+}
+
+void chayPrim(DoThi g, int dinhDau, DoThi &cayKhung, int &tongTrongSo)
+{
+    bool daChon[SO_TINH];
+    int canhNhoNhat[SO_TINH];
+    int cha[SO_TINH];
+
+    khoiTaoDoThi(cayKhung, g.soDinh);
+    tongTrongSo = 0;
+
+    for(int i = 0; i < g.soDinh; i++)
+    {
+        daChon[i] = false;
+        canhNhoNhat[i] = VO_CUC;
+        cha[i] = -1;
+    }
+
+    canhNhoNhat[dinhDau] = 0;
+
+    for(int dem = 0; dem < g.soDinh; dem++)
+    {
+        int u = -1;
+        int giaTriNhoNhat = VO_CUC;
+
+        for(int i = 0; i < g.soDinh; i++)
+        {
+            if(!daChon[i] && canhNhoNhat[i] < giaTriNhoNhat)
+            {
+                giaTriNhoNhat = canhNhoNhat[i];
+                u = i;
+            }
+        }
+
+        if(u == -1)
+            return;
+
+        daChon[u] = true;
+
+        if(cha[u] != -1)
+        {
+            themTuyenDuong(cayKhung, u, cha[u], g.maTran[u][cha[u]]);
+            tongTrongSo += g.maTran[u][cha[u]];
+        }
+
+        for(int v = 0; v < g.soDinh; v++)
+        {
+            if(g.maTran[u][v] != 0 && !daChon[v] && g.maTran[u][v] < canhNhoNhat[v])
+            {
+                canhNhoNhat[v] = g.maTran[u][v];
+                cha[v] = u;
+            }
+        }
+    }
+}
+
+void inKetQuaPrim(DoThi g, int dinhDau)
+{
+    DoThi cayPrim;
+    int tongTrongSo;
+
+    chayPrim(g, dinhDau, cayPrim, tongTrongSo);
+
+    inMaTranKe(cayPrim, "CAY KHUNG NHO NHAT - PRIM");
+    cout << "\nTong trong so cay Prim: " << tongTrongSo << endl;
+}
+
+vector<Canh> layDanhSachCanh(DoThi g)
+{
+    vector<Canh> danhSach;
+
+    for(int i = 0; i < g.soDinh; i++)
+    {
+        for(int j = i + 1; j < g.soDinh; j++)
+        {
+            if(g.maTran[i][j] != 0)
+                danhSach.push_back({i, j, g.maTran[i][j]});
+        }
+    }
+
+    return danhSach;
+}
+
 int main()
 {
     return 0;
