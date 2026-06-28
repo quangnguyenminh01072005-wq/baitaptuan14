@@ -14,6 +14,16 @@ Node* createNode(int x) {
     p->right = NULL;
     return p;
 }
+// Thêm nút vào BST
+Node* insert(Node* root, int x) {
+    if (root == NULL)
+        return createNode(x);
+    if (x < root->data)
+        root->left = insert(root->left, x);
+    else if (x > root->data)
+        root->right = insert(root->right, x);
+    return root;
+}
 
 int main()
 {
