@@ -9,6 +9,21 @@ void inMang(int arr[], int n) {
     }
     cout << " ]\n";
 }
+void vunDong(int arr[], int n, int i) {
+    int Cha = i;
+    int conTrai = 2 * i + 1;
+    int conPhai = 2 * i + 2;
+    if (conTrai < n && arr[conTrai] > arr[Cha]) {
+        Cha = conTrai;
+    }
+    if (conPhai < n && arr[conPhai] > arr[Cha]) {
+        Cha = conPhai;
+    }
+    if (Cha != i) {
+        swap(arr[i], arr[Cha]);
+        vunDong(arr, n, Cha);
+    }
+}
 
 int main()
 {
