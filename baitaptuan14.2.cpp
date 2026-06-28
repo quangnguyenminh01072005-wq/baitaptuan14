@@ -77,7 +77,60 @@ void BFS_MaTran(Matran g, int dinhBatDau) {   // Hàm duyệt theo chiều rộn
             } } }
     cout << "END" << endl; }
 
-int main()
-{
-    return 0;
-}
+void InMaTran(Matran g) {
+        cout << "\n LUU TRU THEO MA TRAN LAN CAN " << endl;
+    cout << setw(15) << " ";
+  for (int j = 0; j < g.Sotinhxet; j++) {   cout << setw(15) << DSTinh[j]; }  // in ten tỉnh theo hàng
+    cout << endl;
+
+    for (int i = 0; i < g.Sotinhxet; i++) {
+        cout << setw(15) << DSTinh[i];   // in ten tinh theo cột
+        for (int j = 0; j < g.Sotinhxet; j++) {
+            if (g.matrix[i][j] == 0)  cout << setw(15) << "0";   // kh co đường đi
+            else {
+                string tenDuong = "D" + to_string(g.matrix[i][j]);
+                cout << setw(15) << tenDuong; } }    // In ra mã đường
+        cout << endl;
+    }   }
+
+void InDanhSach(DanhSachDoThi dt) {
+    cout << "\n LUU TRU THEO DANH SACH LIEN KET " << endl;
+    for (int i = 0; i < dt.Sotinhxet; i++) {     
+        cout << setw(3) << DSTinh[i] << " -> ";   // In ra tên tỉnh hiện tại đang xét
+        
+        Nut* tam = dt.dau[i];
+        if (tam == nullptr) {
+            cout << "Khong co tuyen duong nao";
+        } else {
+            while (tam != nullptr) {   // Duyệt DSLK tỉnh htai
+                cout << DSTinh[tam->idTinhKe] << " D" << tam->maTuyenDuong; // in theo de bai 
+                if (tam->tiepTheo != nullptr) cout << " -> "; 
+                tam = tam->tiepTheo; 
+            }   
+        }
+        cout << endl;
+    }   }
+
+int main() {
+    int n = Sotinh_max;
+    Matran g; 
+    Khoitaomatran(g, n);
+    DanhSachDoThi dt;
+    Khoitaods(dt, n);
+
+  
+    int CacTuyenDuong[][3] = { {0, 6, 1},  {6, 7, 2}, {7, 8, 3},  {0, 8, 4}, {0, 9, 5},   
+        {0, 10, 6}, {0, 1, 7},  {0, 2, 8},  {2, 3, 9}, {3, 4, 10},  {2, 4, 11},  {4, 5, 12},{6, 5, 13}  };
+// Nạp dữ liệu vào cấu trúc ma trận 
+
+    int soTuyen = sizeof(CacTuyenDuong) / sizeof(CacTuyenDuong[0]);
+    for(int i = 0; i < soTuyen; i++) { ThemDuongMaTran(g, CacTuyenDuong[i][0], CacTuyenDuong[i][1], CacTuyenDuong[i][2]);
+    
+    ThemDuongDanhSach(dt, CacTuyenDuong[i][0], CacTuyenDuong[i][1], CacTuyenDuong[i][2]);
+    }
+
+    InMaTran(g);
+    InDanhSach(dt);
+        cout << "\n DUYET DO THI THEO CHIEU RONG VA IN TU HN  " << endl;
+    BFS_MaTran(g, 0);
+return 0;}
