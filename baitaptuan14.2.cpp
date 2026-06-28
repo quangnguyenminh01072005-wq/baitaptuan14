@@ -41,6 +41,42 @@ void Khoitaods(DanhSachDoThi &dt, int n) {  // DS trống (null)
     for (int i = 0; i < n; i++)  dt.dau[i] = nullptr;
 }
 
+void ThemDuongDanhSach(DanhSachDoThi &dt, int u, int v, int maTuyen) { // bo sung
+    // ham ket noi 2 node u voi v, tinh u co duogn den v và ngược lại
+    Nut* nutMoi1 = new Nut;      // Thêm v vào danh sách của u
+    nutMoi1->idTinhKe = v;
+    nutMoi1->maTuyenDuong = maTuyen; // cap nhat ma tuyến
+    nutMoi1->tiepTheo = dt.dau[u];
+    dt.dau[u] = nutMoi1;
+
+    // Thêm u vào danh sách của v , tương tự
+    Nut* nutMoi2 = new Nut;   
+    nutMoi2->idTinhKe = u;
+    nutMoi2->maTuyenDuong = maTuyen;
+    nutMoi2->tiepTheo = dt.dau[v];
+    dt.dau[v] = nutMoi2;
+}
+
+void BFS_MaTran(Matran g, int dinhBatDau) {   // Hàm duyệt theo chiều rộng (BFS)
+    bool Daduyet[Sotinh_max] = {false}; // Mảng check đỉnh đã duyệt
+    queue<int> hangDoi;                // Hàng đợi q để quản lý các đỉnh kề
+
+    Daduyet[dinhBatDau] = true;   // Đánh dấu đỉnh gốc và đẩy vào hàng đợi
+    hangDoi.push(dinhBatDau);
+
+    while (!hangDoi.empty()) {   
+        int u = hangDoi.front(); // Lấy đỉnh đầu tiên ra khỏi hàng đợi
+        hangDoi.pop();           // Quy tắc 2
+
+        cout << DSTinh[u] << " -> ";   
+
+        for (int v = 0; v < g.Sotinhxet; v++) {   // Có đường
+            if (g.matrix[u][v] != 0 && !Daduyet[v]) {
+                Daduyet[v] = true;     // Đánh dấu đỉnh là đã được duyệt
+                hangDoi.push(v);      // Đẩy vào trong hàng đợi
+            } } }
+    cout << "END" << endl; }
+
 int main()
 {
     return 0;
