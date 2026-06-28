@@ -26,6 +26,34 @@ const string tenTinh[SO_TINH] =
     "Son Tay"
 };
 
+struct DoThi
+{
+    int soDinh;
+    int maTran[SO_TINH][SO_TINH];
+};
+
+struct Canh
+{
+    int u;
+    int v;
+    int trongSo;
+};
+
+void khoiTaoDoThi(DoThi &g, int n)
+{
+    g.soDinh = n;
+
+    for(int i = 0; i < n; i++)
+        for(int j = 0; j < n; j++)
+            g.maTran[i][j] = 0;
+}
+
+void themTuyenDuong(DoThi &g, int u, int v, int maDuong)
+{
+    g.maTran[u][v] = maDuong;
+    g.maTran[v][u] = maDuong;
+}
+
 int main()
 {
     return 0;
