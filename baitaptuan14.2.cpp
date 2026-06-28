@@ -24,6 +24,23 @@ void ThemDuongMaTran(Matran &g, int u, int v, int matuyen) {
     g.matrix[u][v] = matuyen;  // cap nhat lai, khph ton tai ma la tuyen duong
     g.matrix[v][u] = matuyen; }
 
+
+
+struct Nut {       // Dnghia nut
+    int idTinhKe;      // Tỉnh kề
+    int maTuyenDuong;  // Mã đường
+    Nut* tiepTheo;      
+};
+
+struct DanhSachDoThi {   // Định nghĩa ds lien ke
+    int Sotinhxet;
+    Nut* dau[Sotinh_max]; };
+
+void Khoitaods(DanhSachDoThi &dt, int n) {  // DS trống (null)
+    dt.Sotinhxet = n;
+    for (int i = 0; i < n; i++)  dt.dau[i] = nullptr;
+}
+
 int main()
 {
     return 0;
