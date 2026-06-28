@@ -15,6 +15,21 @@ int height(Node *p) {
     return p->height;
 }
 
+// Hàm max
+int maxx(int a, int b) {
+    return (a > b) ? a : b;
+}
+
+// Tạo nút mới
+Node* createNode(int x) {
+    Node *p = new Node;
+    p->key = x;
+    p->left = NULL;
+    p->right = NULL;
+    p->height = 1;
+    return p;
+}
+
 int main()
 {
     return 0;
