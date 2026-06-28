@@ -32,6 +32,34 @@ void nhapSV(SinhVien &x){
     cin>>x.ns.d>>x.ns.m>>x.ns.y;
 }
 
+//================= THÊM CUỐI =================
+void themCuoi(Node* &head, SinhVien x){
+    Node* p = taoNode(x);
+    if(head == NULL){
+        head = p;
+        return;
+    }
+    Node* q = head;
+    while(q->next)
+        q = q->next;
+    q->next = p;
+}
+
+//================= THÊM THEO THỨ TỰ MÃ =================
+void themTheoThuTu(Node* &head, SinhVien x){
+    Node* p = taoNode(x);
+    if(head == NULL || strcmp(x.ma, head->data.ma) < 0){
+        p->next = head;
+        head = p;
+        return;
+    }
+    Node* q = head;
+    while(q->next && strcmp(q->next->data.ma, x.ma) < 0)
+        q = q->next;
+    p->next = q->next;
+    q->next = p;
+}
+
 int main()
 {
     return 0;
