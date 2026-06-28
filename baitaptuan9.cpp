@@ -92,7 +92,52 @@ void inCungNgay(Node* head, Ngay x){
         cout<<"Khong tim thay\n";
 }
 
-int main()
-{
+//================= XÓA SV THEO NGÀY SINH =================
+void xoa(Node* &head, Ngay x){
+    while(head && trungNgay(head->data.ns,x)){
+        Node* t = head;
+        head = head->next;
+        delete t;
+    }
+    Node* p = head;
+    while(p && p->next){
+        if(trungNgay(p->next->data.ns,x)){
+            Node* t = p->next;
+            p->next = t->next;
+            delete t;
+        }
+        else
+            p = p->next;
+    }
+}
+
+//================= MAIN =================
+int main(){
+    Node* head = NULL;
+    int n;
+    cout<<"Nhap so sinh vien: ";
+    cin>>n;
+    for(int i=0;i<n;i++){
+        SinhVien x;
+        cout<<"\nNhap sinh vien thu "<<i+1<<endl;
+        nhapSV(x);
+        // Chọn 1 trong 2 cách thêm:
+        // themCuoi(head,x);
+        themTheoThuTu(head,x);
+    }
+    cout<<"\nDanh sach sinh vien:\n";
+    xuat(head);
+
+    //----- TÌM SV CÙNG NGÀY SINH -----
+    Ngay x;
+    cout<<"\nNhap ngay can tim: ";
+    cin>>x.d>>x.m>>x.y;
+    cout<<"\nSinh vien cung ngay sinh:\n";
+    inCungNgay(head,x);
+
+    //----- XÓA SV CÙNG NGÀY SINH -----
+    xoa(head,x);
+    cout<<"\nDanh sach sau khi xoa:\n";
+    xuat(head);
     return 0;
 }
