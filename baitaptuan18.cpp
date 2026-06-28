@@ -266,7 +266,93 @@ vector<Canh> layDanhSachCanh(DoThi g)
     return danhSach;
 }
 
+int timGoc(int cha[], int u)
+{
+    if(cha[u] == u)
+        return u;
+
+    cha[u] = timGoc(cha, cha[u]);
+    return cha[u];
+}
+
+bool hopNhat(int cha[], int bac[], int u, int v)
+{
+    int gocU = timGoc(cha, u);
+    int gocV = timGoc(cha, v);
+
+    if(gocU == gocV)
+        return false;
+
+    if(bac[gocU] < bac[gocV])
+        cha[gocU] = gocV;
+    else if(bac[gocU] > bac[gocV])
+        cha[gocV] = gocU;
+    else
+    {
+        cha[gocV] = gocU;
+        bac[gocU]++;
+    }
+
+    return true;
+}
+
+void chayKruskal(DoThi g, DoThi &cayKhung, int &tongTrongSo)
+{
+    vector<Canh> danhSach = layDanhSachCanh(g);
+    int cha[SO_TINH];
+    int bac[SO_TINH];
+    int soCanhDaChon = 0;
+
+    khoiTaoDoThi(cayKhung, g.soDinh);
+    tongTrongSo = 0;
+
+    sort(danhSach.begin(), danhSach.end(), [](Canh a, Canh b)
+    {
+        return a.trongSo < b.trongSo;
+    });
+
+    for(int i = 0; i < g.soDinh; i++)
+    {
+        cha[i] = i;
+        bac[i] = 0;
+    }
+
+    for(int i = 0; i < (int)danhSach.size(); i++)
+    {
+        Canh canh = danhSach[i];
+
+        if(hopNhat(cha, bac, canh.u, canh.v))
+        {
+            themTuyenDuong(cayKhung, canh.u, canh.v, canh.trongSo);
+            tongTrongSo += canh.trongSo;
+            soCanhDaChon++;
+        }
+
+        if(soCanhDaChon == g.soDinh - 1)
+            break;
+    }
+}
+
+void inKetQuaKruskal(DoThi g)
+{
+    DoThi cayKruskal;
+    int tongTrongSo;
+
+    chayKruskal(g, cayKruskal, tongTrongSo);
+
+    inMaTranKe(cayKruskal, "CAY KHUNG NHO NHAT - KRUSKAL");
+    cout << "\nTong trong so cay Kruskal: " << tongTrongSo << endl;
+}
+
 int main()
 {
+    DoThi banDo;
+    taoBanDoGiaoThong(banDo);
+
+    inMaTranKe(banDo, "MA TRAN KE DO THI GIAO THONG");
+    inKetQuaDijkstra(banDo, 0, 4);
+    inKetQuaPrim(banDo, 0);
+    inKetQuaKruskal(banDo);
+
     return 0;
 }
