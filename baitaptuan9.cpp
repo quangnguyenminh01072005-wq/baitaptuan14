@@ -60,6 +60,38 @@ void themTheoThuTu(Node* &head, SinhVien x){
     q->next = p;
 }
 
+//================= XUẤT =================
+void xuat(Node* head){
+    while(head){
+        cout<<head->data.ma<<" - "
+            <<head->data.ten<<" - "
+            <<head->data.ns.d<<"/"
+            <<head->data.ns.m<<"/"
+            <<head->data.ns.y<<endl;
+        head = head->next;
+    }
+}
+
+//================= SO SÁNH NGÀY =================
+bool trungNgay(Ngay a, Ngay b){
+    return a.d==b.d && a.m==b.m && a.y==b.y;
+}
+//================= IN SV CÙNG NGÀY SINH =================
+void inCungNgay(Node* head, Ngay x){
+    bool found = false;
+    while(head){
+        if(trungNgay(head->data.ns,x)){
+            cout<<head->data.ma
+                <<" - "
+                <<head->data.ten<<endl;
+            found = true;
+        }
+        head = head->next;
+    }
+    if(!found)
+        cout<<"Khong tim thay\n";
+}
+
 int main()
 {
     return 0;
