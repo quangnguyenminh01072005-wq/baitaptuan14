@@ -51,3 +51,27 @@ Node* findMin(LinkedList list) {
     }
     return minNode;
 }
+// xóa node bất kỳ
+void deleteNode(LinkedList &list, Node* target) {
+    if (list.head == NULL) return;
+    if (list.head == target) {
+        Node* temp = list.head;
+        list.head = list.head->next;
+        delete temp;
+        return;
+    }
+    Node* cur = list.head;
+    while (cur->next != target) {
+        cur = cur->next;
+    }
+    Node* temp = cur->next;
+    cur->next = temp->next;
+    delete temp;
+}
+// backup
+void backupUSB(LinkedList &list, int capacity) {
+    while (totalSize(list) > capacity) {
+        Node* minNode = findMin(list);
+        deleteNode(list, minNode);
+    }
+}
