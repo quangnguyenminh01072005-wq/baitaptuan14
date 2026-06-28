@@ -24,6 +24,13 @@ void vunDong(int arr[], int n, int i) {
         vunDong(arr, n, Cha);
     }
 }
+void taoDongBanDau(int arr[], int n) {
+    for (int i = n / 2 - 1; i >= 0; i--) {
+        vunDong(arr, n, i);
+        cout << "Vun dong tai nut i = " << i + 1 << ": ";
+        inMang(arr, n);
+    }
+}
 
 int main()
 {
